@@ -1,0 +1,23 @@
+<h1><%= @user.email %></h1>
+<div class="images" id="post_section">
+        <% if current_user == @user %>
+            <%
+                @images = @user.images
+            %>
+        <% else %>
+            <%
+                @images = @user.images.select do |image|
+                    image.public
+                end
+            %>
+        <% end %>
+        <% @images.each do |image| %>
+            
+            <div class="post">
+                    <div>
+                        <img class="post-image" src="<%= image.link %>">
+                    </div>
+                    <p class="post-caption"><%= image.caption %></p>
+            </div>
+        <% end %>
+</div>

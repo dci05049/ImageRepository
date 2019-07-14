@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dcwnwlm2d
+  api_key: '667622179593525'
+  api_secret: 3eXmFXrZHCxBVsqU37cCzWtBc84
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: dcwnwlm2d
+  api_key: '667622179593525'
+  api_secret: 3eXmFXrZHCxBVsqU37cCzWtBc84
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: dcwnwlm2d
+  api_key: '667622179593525'
+  api_secret: 3eXmFXrZHCxBVsqU37cCzWtBc84
+  enhance_image_tag: true
+  static_file_support: false
