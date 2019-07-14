@@ -7,8 +7,14 @@ class ImageController < ApplicationController
 
   def store
     params[:image].each do |image|
-      @value = Cloudinary::Uploader.upload(image)
-      @image = Image.new({:user_id => current_user.id, :link => @value['secure_url'], :caption => params[:caption], :public => params[:permission]})
+      @upload = Cloudinary::Uploader.upload(image)
+      @price = params[:price]
+      @discount = params[:discount]
+      @caption = params[:caption]
+      @permission = params[:permission]
+
+      @image = Image.new({:user_id => current_user.id, :link => @upload['secure_url'], :price => @price,
+      :discount => @discount, :caption => @caption, :public => @permission })
       if @image.save
         # broadcasting posts using pusher
         Pusher.trigger('posts-channel','new-post', {

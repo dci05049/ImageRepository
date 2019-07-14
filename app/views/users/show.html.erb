@@ -1,23 +1,16 @@
 <h1><%= @user.email %></h1>
 <div class="images" id="post_section">
-        <% if current_user == @user %>
-            <%
-                @images = @user.images
-            %>
-        <% else %>
-            <%
-                @images = @user.images.select do |image|
-                    image.public
-                end
-            %>
-        <% end %>
         <% @images.each do |image| %>
-            
             <div class="post">
                     <div>
                         <img class="post-image" src="<%= image.link %>">
                     </div>
                     <p class="post-caption"><%= image.caption %></p>
+                    <p class="post-caption"><%= image.price %></p>
+                    <% if @current_user != @user %>
+                    <%= button_to "Purchase", {:controller => :users, 
+                    :action => 'purchase_image', params: { id: image.id }  }, :method => :post %>
+                    <% end %>
             </div>
         <% end %>
 </div>

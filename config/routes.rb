@@ -12,6 +12,10 @@ Rails.application.routes.draw do
 
   match '/users',   to: 'users#index',   via: 'get'
   match '/users/:id',     to: 'users#show',       via: 'get'
+  match '/users/:id/update_balance',     to: 'users#update_balance',       via: 'post'
+  match '/users/:id/purchase_image',     to: 'users#purchase_image',       via: 'post'
+
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

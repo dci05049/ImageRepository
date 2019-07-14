@@ -1,5 +1,13 @@
 <h1 style="text-align: center">My Image Repository</h1>
 <div class="wrapper">
+
+    <%= form_tag(:controller => "users", :id => @current_user.id, :action => "update_balance", :method => "put") do %>
+    <%= label_tag(:balance, "Amount: ") %>
+    <%= text_field_tag(:balance) %>
+    <%= submit_tag("Add Balance") %>
+    <% end %>
+    <p>My Balance: <%= @current_user.balance %></p>
+
     <form class="uploads" method="POST" action="/image/store" enctype="multipart/form-data">
         <%= token_tag %> 
         <div class="form-group">
@@ -8,7 +16,15 @@
         </div>
         <div>
             <label for="caption">public</label>
-            <input type="checkbox" value="permission">
+            <input type="checkbox" name="permission">
+        </div>
+        <div>
+            <label for="caption">price</label>
+            <input type="integer" name="price">
+        </div>
+        <div>
+            <label for="caption">discount</label>
+            <input type="integer" name="discount">
         </div>
         <div style="margin-left: 5px;">
             <input type="file" name="image[]" multiple="multiple">
@@ -21,12 +37,14 @@
     <div class="images" id="post_section">
           <% @images.each do |image| %>
               <div class="post">
-                      <div>
-                          <img class="post-image" src="<%= image.link %>">
-                      </div>
-                      <p class="post-caption"><%= image.caption %></p>
-                      <%= button_to "delete", {:controller => :image,
-                        :action => 'destroy', :id => image.id }, :method => :delete %>
+                    <div>
+                        <img class="post-image" src="<%= image.link %>">
+                    </div>
+                    <p class="post-caption">caption:  <%= image.caption %></p>
+                    <p class="post-caption">price: <%= image.price %></p>
+                    <p class="post-caption">discount: <%= image.discount %></p>
+                    <%= button_to "delete", {:controller => :image,
+                    :action => 'destroy', :id => image.id }, :method => :delete %>
               </div>
           <% end %>
     </div>
