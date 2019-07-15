@@ -34,20 +34,26 @@
         </div>
     </form>
 
-    <div class="images" id="post_section">
-          <% @images.each do |image| %>
-              <div class="post">
-                    <div>
-                        <img class="post-image" src="<%= image.link %>">
-                    </div>
-                    <p class="post-caption">caption:  <%= image.caption %></p>
-                    <p class="post-caption">price: <%= image.price %> => <%= image.price_after_discount %></p>
-                    <p class="post-caption">discount: <%= image.discount %></p>
-                    <%= button_to "delete", {:controller => :image,
-                    :action => 'destroy', :id => image.id }, :method => :delete %>
-              </div>
-          <% end %>
-    </div>
+    <%= form_tag(:controller => "image",  :action => "destroy_multiple", :method => "delete") do %>
+    <table>
+        <tbody>
+            <% @images.each do |image| %>
+                <div class="post">
+                        <%= check_box_tag "images[]", image.id, false, class: 'selectable' %>
+                        <div>
+                            <img class="post-image" src="<%= image.link %>">
+                        </div>
+                        <p class="post-caption">caption:  <%= image.caption %></p>
+                        <p class="post-caption">price: <%= image.price %> => <%= image.price_after_discount %></p>
+                        <p class="post-caption">discount: <%= image.discount %></p>
+                        <%= button_to "delete", {:controller => :image,
+                        :action => 'destroy', :id => image.id }, :method => :delete %>
+                </div>
+            <% end %>
+        </tbody>
+    </table>
+    <%= submit_tag "Delete selected", :class => 'btn btn-primary btn-xs' %>
+    <% end %>
 
     <script>
         var channel = pusher.subscribe('posts-channel');
