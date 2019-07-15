@@ -31,8 +31,9 @@ class UsersController < ApplicationController
             })
         end
 
-        image.user.add_balance(image.price)
-        current_user.subtract_balance(image.price)
+        price = image.price - image.price * image.discount / 100.00
+        image.user.add_balance(price.to_i)
+        current_user.subtract_balance(price.to_i)
         
         redirect_to('/')
     end

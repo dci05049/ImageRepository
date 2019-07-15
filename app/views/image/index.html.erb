@@ -41,7 +41,7 @@
                         <img class="post-image" src="<%= image.link %>">
                     </div>
                     <p class="post-caption">caption:  <%= image.caption %></p>
-                    <p class="post-caption">price: <%= image.price %></p>
+                    <p class="post-caption">price: <%= image.price %> => <%= image.price_after_discount %></p>
                     <p class="post-caption">discount: <%= image.discount %></p>
                     <%= button_to "delete", {:controller => :image,
                     :action => 'destroy', :id => image.id }, :method => :delete %>
