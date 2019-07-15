@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     def show
+        #if current user, display all images, if not display public
         @user = User.find_by_id(params[:id])
         if current_user == @user
             @images = @user.images
@@ -19,7 +20,10 @@ class UsersController < ApplicationController
     end
 
     def purchase_image 
+        #some checks to do: make sure image's owner and current_user is not the same
+        #since we can't purchase our own images
         image = Image.find_by_id(params[:id])
+        raise 'error: image owner cannot be same as current user' if image.user_id == current_user.id
 
         newImage = Image.new({:user_id => current_user.id, :link => image.link, :price => image.price,
         :discount => image.discount, :caption => image.caption, :public => false })

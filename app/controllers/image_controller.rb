@@ -6,6 +6,7 @@ class ImageController < ApplicationController
   end
 
   def store
+    #use active_import bulk creation to avoide having to loop through it
     params[:image].each do |image|
       @upload = Cloudinary::Uploader.upload(image)
       @price = params[:price]
@@ -15,6 +16,7 @@ class ImageController < ApplicationController
 
       @image = Image.new({:user_id => current_user.id, :link => @upload['secure_url'], :price => @price,
       :discount => @discount, :caption => @caption, :public => @permission })
+      # n + 1 query
       if @image.save
         # broadcasting posts using pusher
         Pusher.trigger('posts-channel','new-post', {
