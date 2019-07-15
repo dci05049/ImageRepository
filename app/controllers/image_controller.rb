@@ -41,10 +41,12 @@ class ImageController < ApplicationController
     #do validation to make sure it is the owner's image
     images = params[:images]
     # remove n+1 query with eager loading
-    params[:images].each do |image|
+    params[:images].each do |id|
+      image = Image.find_by_id(id)
       raise "error: attempting to delete other user's image" if image.user_id != current_user.id
     end
     Image.destroy(params[:images])
+    redirect_to('/')
   end
 
   private 

@@ -27,7 +27,7 @@ class UsersController < ApplicationController
         raise 'error: image owner cannot be same as current user' if image.user_id == current_user.id
 
         newImage = Image.new({:user_id => current_user.id, :link => image.link, :price => image.price,
-        :discount => image.discount, :caption => image.caption, :public => false })
+        :discount => image.discount, :caption => image.caption, :public => false, :purchased => true })
         if newImage.save
             # broadcasting posts using pusher
             Pusher.trigger('posts-channel','new-post', {
