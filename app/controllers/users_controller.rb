@@ -17,6 +17,7 @@ class UsersController < ApplicationController
         user = User.find_by_id(params[:id])
         amount = params[:balance]
         user.add_balance(amount.to_i)
+        redirect_to('/')
     end
 
     def purchase_image 

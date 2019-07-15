@@ -16,8 +16,7 @@ class ImageController < ApplicationController
       permission = params[:permission]
 
       image = Image.new({:user_id => current_user.id, :link => upload['secure_url'], :price => price,
-      :discount => discount, :caption => caption, :public => permission })
-      # n + 1 query
+      :discount => discount, :caption => caption, :public => permission })  
       if image.save
         # broadcasting posts using pusher
         Pusher.trigger('posts-channel','new-post', {
@@ -40,6 +39,11 @@ class ImageController < ApplicationController
 
   def destroy_multiple 
     #do validation to make sure it is the owner's image
+    images = params[:images]
+    # remove n+1 query with eager loading
+    params[:images].each do |image|
+      raise "error: attempting to delete other user's image" if image.user_id != current_user.id
+    end
     Image.destroy(params[:images])
   end
 
